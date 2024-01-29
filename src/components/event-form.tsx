@@ -1,41 +1,46 @@
 'use client';
 
-import { ChevronRight, Minus, Plus } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
 import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
-import { submitEvent } from '@/app/events/[id]/action';
-import { Event } from '@/lib/types';
-import { formatCurrency } from '@/lib/utils';
+import { submitEvent } from '@/app/admin/events/create/action';
+import { EventInput } from '@/lib/types';
+import { cn, formatDate } from '@/lib/utils';
 
 import { Button } from './ui/button';
+import { Calendar } from './ui/calendar';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Textarea } from './ui/textarea';
 
 interface EventFormProps {
-	event: Event;
+	//
 }
 
-export interface EventFormData {
-	name: string;
-	email: string;
-	seats: number;
-}
-
-const EventForm: React.FC<EventFormProps> = ({ event }) => {
+const EventForm: React.FC<EventFormProps> = ({}) => {
 	const {
 		control,
 		watch,
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<EventFormData>({
+	} = useForm<EventInput>({
 		defaultValues: {
+			image: '',
 			name: '',
-			email: '',
-			seats: 1,
+			description: '',
+			datetime: '',
+			category: '',
+			place: '',
+			price: 0,
+			seats: 0,
 		},
 	});
 
-	const seats = watch('seats');
+	const date = watch('datetime');
 	const onSubmit = handleSubmit((data) => {
 		React.startTransition(() => {
 			submitEvent(data);
@@ -45,14 +50,11 @@ const EventForm: React.FC<EventFormProps> = ({ event }) => {
 	return (
 		<form className='flex flex-col' onSubmit={onSubmit}>
 			<div className='mb-4'>
-				<label htmlFor='name' className='mb-2 text-sm font-medium'>
-					Name
-				</label>
-				<input
-					type='text'
+				<Label htmlFor='name'>Enter Event Name</Label>
+				<Input
 					id='name'
+					type='text'
 					placeholder='Name'
-					className='w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm'
 					{...register('name', {
 						required: true,
 						minLength: 3,
@@ -63,83 +65,152 @@ const EventForm: React.FC<EventFormProps> = ({ event }) => {
 			</div>
 
 			<div className='mb-4'>
-				<label htmlFor='email' className='mb-2 text-sm font-medium'>
-					Email
-				</label>
-				<input
-					type='email'
-					id='email'
-					placeholder='Email'
-					className='w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm'
-					{...register('email', {
+				<Label htmlFor='description'>Description</Label>
+				<Textarea
+					rows={5}
+					id='description'
+					placeholder='Description'
+					{...register('description', {
+						required: true,
+						minLength: 32,
+						maxLength: 256,
+					})}
+				/>
+				{errors.description && (
+					<div className='mt-1 text-xs text-red-500'>Description must be between 3-50 characters</div>
+				)}
+			</div>
+
+			<div className='mb-4'>
+				<Label htmlFor='datetime'>Date & Time</Label>
+				<Controller
+					name='datetime'
+					control={control}
+					rules={{
+						required: true,
+					}}
+					render={({ field }) => (
+						<Popover>
+							<PopoverTrigger asChild>
+								<button
+									role='button'
+									className={cn(
+										'flex w-full items-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm',
+										!!date && 'text-left'
+									)}>
+									<CalendarIcon className='mr-2 h-4 w-4' />
+									{date ? formatDate(date) : <span>Pick a date</span>}
+								</button>
+							</PopoverTrigger>
+							<PopoverContent className='w-auto p-0' align='start'>
+								<Calendar
+									mode='single'
+									selected={new Date(date)}
+									onSelect={field.onChange}
+									initialFocus
+								/>
+							</PopoverContent>
+						</Popover>
+					)}
+				/>
+				{errors.datetime && <div className='mt-1 text-xs text-red-500'>Date & Time is required</div>}
+			</div>
+
+			<div className='mb-4 grid grid-cols-2 gap-6'>
+				<div>
+					<Label htmlFor='category'>Category</Label>
+					<Controller
+						name='category'
+						control={control}
+						rules={{
+							required: true,
+						}}
+						render={({ field }) => (
+							<Select onValueChange={field.onChange} defaultValue={field.value}>
+								<SelectTrigger className='w-full'>
+									<SelectValue placeholder='Select Category' />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value='concert'>Concert</SelectItem>
+									<SelectItem value='conference'>Conference</SelectItem>
+									<SelectItem value='exhibition'>Exhibition</SelectItem>
+									<SelectItem value='festival'>Festival</SelectItem>
+								</SelectContent>
+							</Select>
+						)}
+					/>
+					{errors.category && (
+						<div className='mt-1 text-xs text-red-500'>Category must be between 3-50 characters</div>
+					)}
+				</div>
+
+				<div>
+					<Label htmlFor='image'>Image</Label>
+					<Input
+						id='image'
+						type='file'
+						placeholder='Image'
+						{...register('image', {
+							required: false,
+						})}
+					/>
+					{errors.image && <div className='mt-1 text-xs text-red-500'>Error uploading image</div>}
+				</div>
+			</div>
+
+			<div className='mb-4'>
+				<Label htmlFor='place'>Place</Label>
+				<Input
+					id='place'
+					type='text'
+					placeholder='Place'
+					{...register('place', {
 						required: true,
 						minLength: 3,
 						maxLength: 50,
 					})}
 				/>
-				{errors.email && <div className='mt-1 text-xs text-red-500'>Enter a valid email address</div>}
+				{errors.place && <div className='mt-1 text-xs text-red-500'>Place must be between 3-50 characters</div>}
 			</div>
 
-			<div className='mb-4'>
-				<label htmlFor='seats' className='mb-2 text-sm font-medium'>
-					Seats
-				</label>
-				<Controller
-					name='seats'
-					control={control}
-					rules={{
-						required: true,
-						min: 1,
-						max: event.seats,
-					}}
-					render={({ field }) => (
-						<div className='flex items-center justify-between'>
-							<Button
-								className='text-indigo-950'
-								variant='outline'
-								size='icon'
-								onClick={() => {
-									if (field.value > 1) field.onChange(Number(field.value) - 1);
-								}}>
-								<Minus className='h-4 w-4' />
-							</Button>
-							<input
-								type='number'
-								id='seats'
-								placeholder='Seats'
-								className='w-30 rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm'
-								{...field}
-							/>
-							<Button
-								className='text-indigo-950'
-								variant='outline'
-								size='icon'
-								onClick={() => {
-									if (field.value < event.seats) field.onChange(Number(field.value) + 1);
-								}}>
-								<Plus className='h-4 w-4' />
-							</Button>
-						</div>
-					)}
-				/>
-				{errors.seats && <div className='mt-1 text-xs text-red-500'>Seats must be between 1-{event.seats}</div>}
+			<div className='mb-6 grid grid-cols-2 gap-6'>
+				<div>
+					<Label htmlFor='price'>Price</Label>
+					<Input
+						id='price'
+						type='number'
+						placeholder='Price'
+						{...register('price', {
+							required: true,
+							min: 0,
+						})}
+					/>
+					{errors.price && <div className='mt-1 text-xs text-red-500'>Price must be greater than 0</div>}
+				</div>
+
+				<div>
+					<Label htmlFor='seats'>Seats</Label>
+					<Input
+						id='seats'
+						type='number'
+						placeholder='Seats'
+						{...register('seats', {
+							required: true,
+							min: 0,
+						})}
+					/>
+					{errors.seats && <div className='mt-1 text-xs text-red-500'>Seats must be greater than 0</div>}
+				</div>
 			</div>
 
-			<div className='mb-6'>
-				<label htmlFor='price' className='mb-2 text-sm font-medium'>
-					Price
-				</label>
-				<input
-					type='text'
-					id='price'
-					placeholder='Price'
-					className='w-full rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm'
-					value={formatCurrency(event.price * seats)}
-					disabled
-				/>
+			<div className='flex space-x-2'>
+				<Button type='submit' size='lg' variant='default'>
+					Submit
+				</Button>
+				<Button type='reset' size='lg' variant='secondary'>
+					Reset
+				</Button>
 			</div>
-
-			<Button type='submit'>Buy Ticket</Button>
 		</form>
 	);
 };

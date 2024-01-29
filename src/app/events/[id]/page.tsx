@@ -2,13 +2,13 @@ import { readFileSync } from 'fs';
 import Image from 'next/image';
 import * as React from 'react';
 
-import EventForm from '@/components/event-form';
+import CheckoutForm from '@/components/checkout-form';
 import ReviewsLoading from '@/components/review/loading';
 import Reviews from '@/components/review/reviews';
-import { Event } from '@/lib/types';
+import type { Event } from '@/lib/types';
 import { formatCurrency } from '@/lib/utils';
 
-interface EventPageProps {
+interface EventDetailPageProps {
 	params: {
 		id: string;
 	};
@@ -23,7 +23,7 @@ const fetchEvent = async (id: number) => {
 	return event;
 };
 
-const EventPage: React.FC<EventPageProps> = async ({ params }) => {
+const EventDetailPage: React.FC<EventDetailPageProps> = async ({ params }) => {
 	const id = Number.parseInt(params.id) ?? 1;
 	const event = await fetchEvent(id);
 
@@ -98,7 +98,7 @@ const EventPage: React.FC<EventPageProps> = async ({ params }) => {
 					</div>
 
 					<div className='rounded-2xl border border-gray-300 bg-white p-8'>
-						<EventForm event={event} />
+						<CheckoutForm event={event} />
 					</div>
 				</div>
 
@@ -110,4 +110,4 @@ const EventPage: React.FC<EventPageProps> = async ({ params }) => {
 	);
 };
 
-export default EventPage;
+export default EventDetailPage;

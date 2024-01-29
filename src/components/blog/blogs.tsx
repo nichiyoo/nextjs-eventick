@@ -21,7 +21,7 @@ const Blogs: React.FC<BlogsProps> = async ({}) => {
 	return (
 		<>
 			<div className='mb-8 text-center'>
-				<h2 className='text-eventick-950 mb-4 text-4xl font-bold'>Blogs</h2>
+				<h2 className='mb-4 text-4xl font-bold text-eventick-950'>Blogs</h2>
 				<p className='text-balance text-zinc-600'>
 					Read our latest Blogs, and get the latest information about our platform
 					<br />

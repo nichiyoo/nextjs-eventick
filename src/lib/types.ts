@@ -1,6 +1,6 @@
 export type Event = {
 	id: number;
-	image: string;
+	image?: string;
 	name: string;
 	description: string;
 	datetime: string;
@@ -9,6 +9,8 @@ export type Event = {
 	price: number;
 	seats: number;
 };
+
+export type EventInput = Omit<Event, 'id'>;
 
 export type Blog = {
 	id: number;
@@ -25,3 +27,24 @@ export type Review = {
 	image?: string;
 	review: string;
 };
+
+export type Checkout = {
+	id: number;
+	name: string;
+	email: string;
+	seats: number;
+};
+
+export type CheckoutInput = Omit<Checkout, 'id'>;
+
+export type Promo = {
+	id: number;
+	type: 'percentege' | 'fixed';
+	code: string;
+	description: string;
+	amount: number;
+	expiry: string;
+	available: number;
+};
+
+export type PromoInput = Omit<Promo, 'id'>;

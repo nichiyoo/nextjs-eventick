@@ -15,7 +15,7 @@ const Card: React.FC<CardProps> = ({ event }) => {
 
 	return (
 		<Link href={`/events/${event.id}`}>
-			<div className='shadow-eventick-950/30 overflow-hidden rounded-2xl bg-white shadow-2xl'>
+			<div className='overflow-hidden rounded-2xl bg-white shadow-2xl shadow-eventick-950/30'>
 				<div className='relative aspect-video'>
 					<Image
 						src={event.image}
@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ event }) => {
 				<div className='p-6'>
 					<div className='flex items-start space-x-6'>
 						<div className='flex flex-col items-center'>
-							<span className='text-eventick-900 text-sm font-bold uppercase'>{month}</span>
+							<span className='text-sm font-bold uppercase text-eventick-900'>{month}</span>
 							<span className='text-2xl font-bold'>{day}</span>
 						</div>
 						<div className='flex flex-col space-y-2'>

@@ -1,7 +1,6 @@
-import Image from 'next/image';
 import * as React from 'react';
 
-import { Event, Review } from '@/lib/types';
+import type { Review } from '@/lib/types';
 
 import SingleReview from './single/review';
 

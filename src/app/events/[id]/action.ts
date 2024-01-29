@@ -1,7 +1,7 @@
 'use server';
 
-import { EventFormData } from '@/components/event-form';
+import { CheckoutInput } from '@/lib/types';
 
-export const submitEvent = async (data: EventFormData) => {
+export const submitCheckout = async (data: CheckoutInput) => {
 	console.log(data);
 };

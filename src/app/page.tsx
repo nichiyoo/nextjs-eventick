@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import * as React from 'react';
 
 import Blogs from '@/components/blog/blogs';
@@ -9,6 +10,7 @@ import LoadingEvents from '@/components/event/loading';
 import Filter from '@/components/filter';
 import Footer from '@/components/footer';
 import Hero from '@/components/hero';
+import { Button } from '@/components/ui/button';
 
 interface HomePageProps {
 	searchParams: Record<string, string | undefined>;
@@ -28,7 +30,12 @@ const HomePage: React.FC<HomePageProps> = async ({ searchParams }) => {
 
 			<div className='mx-auto w-full max-w-screen-xl px-4'>
 				<React.Suspense fallback={<LoadingEvents />} key={search + place}>
-					<Events search={search} place={place} />
+					<>
+						<Events search={search} place={place} />
+						<Link href={`/events?search=${search}&place=${place}`} className='flex justify-center'>
+							<Button size='lg'>Load More</Button>
+						</Link>
+					</>
 				</React.Suspense>
 			</div>
 

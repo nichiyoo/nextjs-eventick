@@ -61,7 +61,7 @@ const Footer: React.FC<FooterProps> = () => {
 	const socials = readdirSync('public/socials');
 
 	return (
-		<div className='bg-eventick-950 mt-20'>
+		<div className='mt-20 bg-eventick-950'>
 			<div className='mx-auto w-full max-w-screen-xl px-4 py-16'>
 				<div className='grid grid-cols-2 items-start gap-8 lg:grid-cols-6'>
 					<div className='col-span-2 flex flex-col items-start space-y-4'>
@@ -74,7 +74,7 @@ const Footer: React.FC<FooterProps> = () => {
 								className='h-full max-h-9 w-full cursor-pointer'
 							/>
 						</Link>
-						<p className='text-eventick-200 text-sm'>
+						<p className='text-sm text-eventick-200'>
 							Eventick is a global self-service ticketing platform for live experiences that allows anyone
 							to create, share, find and attend events that fuel their passions and enrich their lives.
 						</p>
@@ -95,9 +95,11 @@ const Footer: React.FC<FooterProps> = () => {
 						<h6 className='mb-4 font-bold text-white'>Plan Events</h6>
 						<ul className='flex flex-col space-y-2 text-sm'>
 							{plan.map((item) => (
-								<Link key={item.href} href={item.href}>
-									<span className='text-eventick-200 hover:text-white'>{item.label}</span>
-								</Link>
+								<li key={item.href}>
+									<Link key={item.href} href={item.href}>
+										<span className='text-eventick-200 hover:text-white'>{item.label}</span>
+									</Link>
+								</li>
 							))}
 						</ul>
 					</div>
@@ -105,15 +107,17 @@ const Footer: React.FC<FooterProps> = () => {
 						<h6 className='mb-4 font-bold text-white'>Eventick</h6>
 						<ul className='flex flex-col space-y-2 text-sm'>
 							{nav.map((item) => (
-								<Link key={item.href} href={item.href}>
-									<span className='text-eventick-200 hover:text-white'>{item.label}</span>
-								</Link>
+								<li key={item.href}>
+									<Link key={item.href} href={item.href}>
+										<span className='text-eventick-200 hover:text-white'>{item.label}</span>
+									</Link>
+								</li>
 							))}
 						</ul>
 					</div>
 					<div className='col-span-2 flex flex-col items-start space-y-4'>
 						<h6 className='mb-4 font-bold text-white'>Stay in the loop</h6>
-						<p className='text-eventick-200 text-sm'>
+						<p className='text-sm text-eventick-200'>
 							Join our mailing list to stay in the loop with our newest for Event and concert
 						</p>
 						<div className='relative w-full'>
@@ -130,7 +134,7 @@ const Footer: React.FC<FooterProps> = () => {
 				</div>
 			</div>
 
-			<div className='border-eventick-100/30 flex items-center justify-center border-t py-6'>
+			<div className='flex items-center justify-center border-t border-eventick-100/30 py-6'>
 				<span className='text-sm text-white/50'>Copyright © 2022 Avi Yansah</span>
 			</div>
 		</div>

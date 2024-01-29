@@ -1,13 +1,15 @@
 import { readFileSync } from 'fs';
+import Link from 'next/link';
 import * as React from 'react';
 
 import Card from '@/components/event/card/card';
-import { Button } from '@/components/ui/button';
-import { Event } from '@/lib/types';
+import type { Event } from '@/lib/types';
+
+import { Button } from '../ui/button';
 
 interface EventsProps {
-	search: string;
-	place: string;
+	search?: string;
+	place?: string;
 }
 
 const fetchEvents = async (search: string, place: string) => {
@@ -16,7 +18,7 @@ const fetchEvents = async (search: string, place: string) => {
 	return res;
 };
 
-const Events: React.FC<EventsProps> = async ({ search, place }) => {
+const Events: React.FC<EventsProps> = async ({ search = '', place = '' }) => {
 	const { events } = await fetchEvents(search, place);
 
 	const filtered = events.filter((event: Event) => {
@@ -30,9 +32,16 @@ const Events: React.FC<EventsProps> = async ({ search, place }) => {
 			<div className='item-center flex justify-between'>
 				<h2 className='text-4xl font-bold text-eventick-950'>Upcoming Events</h2>
 				<div className='flex items-center space-x-4'>
-					<Button variant='secondary'>Hello</Button>
-					<Button variant='secondary'>Hello</Button>
-					<Button variant='secondary'>Hello</Button>
+					<Link href='/admin/events/create'>
+						<Button size='lg' variant='secondary'>
+							Create Event
+						</Button>
+					</Link>
+					<Link href='/admin/promotions/create'>
+						<Button size='lg' variant='secondary'>
+							Create Promotion
+						</Button>
+					</Link>
 				</div>
 			</div>
 
@@ -45,10 +54,6 @@ const Events: React.FC<EventsProps> = async ({ search, place }) => {
 						<p className='text-gray-500'>No events found</p>
 					</div>
 				)}
-			</div>
-
-			<div className='flex justify-center'>
-				<Button size='lg'>Load More</Button>
 			</div>
 		</>
 	);

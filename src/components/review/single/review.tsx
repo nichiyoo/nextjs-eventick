@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { Review } from '@/lib/types';
+import type { Review } from '@/lib/types';
 
 interface ReviewsProps {
 	review: Review;

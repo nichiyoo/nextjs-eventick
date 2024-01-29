@@ -38,6 +38,7 @@ const Hero: React.FC<HeroProps> = ({}) => {
 							src='/hero.png'
 							width={900}
 							height={900}
+							loading='eager'
 							className='relative z-10 mx-auto h-auto w-full max-w-2xl'
 						/>
 					</div>
