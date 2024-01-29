@@ -27,6 +27,16 @@ const EventPage: React.FC<EventPageProps> = async ({ params }) => {
 	const id = Number.parseInt(params.id) ?? 1;
 	const event = await fetchEvent(id);
 
+	const formatDateTime = (datetime: string) => {
+		const date = new Date(datetime);
+		return date.toLocaleDateString('en-US', {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		});
+	};
+
 	return (
 		<>
 			<section id='event'>
@@ -56,6 +66,35 @@ const EventPage: React.FC<EventPageProps> = async ({ params }) => {
 							rem molestiae reiciendis. Praesentium dolores fugit totam iste quis id, harum iure
 							voluptates a.
 						</p>
+
+						<div className='flex flex-col space-y-2'>
+							<div className='grid grid-cols-4'>
+								<div className='col-span-1'>
+									<h3 className='font-bold text-indigo-950'>Date</h3>
+								</div>
+								<div className='col-span-3'>
+									<p className='text-zinc-600'>{formatDateTime(event.datetime)}</p>
+								</div>
+							</div>
+
+							<div className='grid grid-cols-4'>
+								<div className='col-span-1'>
+									<h3 className='font-bold text-indigo-950'>Place</h3>
+								</div>
+								<div className='col-span-3'>
+									<p className='text-zinc-600'>{event.place}</p>
+								</div>
+							</div>
+
+							<div className='grid grid-cols-4'>
+								<div className='col-span-1'>
+									<h3 className='font-bold text-indigo-950'>Seat</h3>
+								</div>
+								<div className='col-span-3'>
+									<p className='text-zinc-600'>{event.seats}</p>
+								</div>
+							</div>
+						</div>
 					</div>
 
 					<div className='rounded-2xl border border-gray-300 bg-white p-8'>
