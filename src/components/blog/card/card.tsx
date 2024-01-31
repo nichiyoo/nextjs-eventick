@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ blog }) => {
 				className='aspect-video rounded-2xl object-cover'
 			/>
 			<Link href={`/blogs/${blog.id}`}>
-				<h5 className='text-eventick-950 line-clamp-2 font-bold decoration-2 underline-offset-4 hover:underline'>
+				<h5 className='line-clamp-2 font-bold text-eventick-950 decoration-2 underline-offset-4 hover:underline'>
 					{blog.title}
 				</h5>
 			</Link>

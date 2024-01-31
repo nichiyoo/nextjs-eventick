@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import EventForm from '@/components/event-form';
-import Sidebar from '@/components/sidebar/sidebar';
 import Loading from '@/components/sidebar/loading';
+import Sidebar from '@/components/sidebar/sidebar';
 
 interface CreateEventPageProps {
 	//
