@@ -7,7 +7,7 @@ interface BrandsProps {
 }
 
 const Brands: React.FC<BrandsProps> = ({ ...props }) => {
-	const images = readdirSync('./public/brands');
+	const images = readdirSync(process.cwd() + '/public/brands');
 
 	return (
 		<div className='py-20'>

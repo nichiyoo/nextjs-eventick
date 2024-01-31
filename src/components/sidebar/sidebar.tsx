@@ -9,7 +9,7 @@ interface SidebarProps {}
 
 const fetchBlogs = async () => {
 	await new Promise((resolve) => setTimeout(resolve, 1000));
-	const res = JSON.parse(readFileSync('public/dummy.json', 'utf-8'));
+	const res = JSON.parse(readFileSync(process.cwd() + '/public/dummy.json', 'utf-8'));
 	return res;
 };
 

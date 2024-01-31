@@ -17,7 +17,7 @@ interface EventDetailPageProps {
 const fetchEvent = async (id: number) => {
 	await new Promise((resolve) => setTimeout(resolve, 1000)); // simulate network delay
 
-	const res = JSON.parse(readFileSync('public/dummy.json', 'utf-8'));
+	const res = JSON.parse(readFileSync(process.cwd() + '/public/dummy.json', 'utf-8'));
 	const event = res.events.find((event: Event) => event.id === id);
 
 	return event;

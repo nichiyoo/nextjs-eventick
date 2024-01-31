@@ -58,7 +58,7 @@ const nav = [
 ];
 
 const Footer: React.FC<FooterProps> = () => {
-	const socials = readdirSync('public/socials');
+	const socials = readdirSync(process.cwd() + '/public/socials');
 
 	return (
 		<div className='mt-20 bg-eventick-950'>

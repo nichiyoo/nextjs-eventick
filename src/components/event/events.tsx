@@ -14,7 +14,7 @@ interface EventsProps {
 
 const fetchEvents = async (search: string, place: string) => {
 	await new Promise((resolve) => setTimeout(resolve, 1000)); // simulate network delay
-	const res = JSON.parse(readFileSync('public/dummy.json', 'utf-8'));
+	const res = JSON.parse(readFileSync(process.cwd() + '/public/dummy.json', 'utf-8'));
 	return res;
 };
 
